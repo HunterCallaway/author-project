@@ -1,4 +1,6 @@
+--creates an Author entity
 CREATE TABLE author(
+--creates the attributes
 	authorId BINARY(16) NOT NULL,
 	authorAvatarUrl VARCHAR(255),
 	authorActivationToken CHAR(32),
@@ -8,5 +10,6 @@ CREATE TABLE author(
 	UNIQUE(authorEmail),
 	UNIQUE(authorUsername),
 	INDEX(authorEmail),
+	--creates a primary key
 	PRIMARY KEY(authorId)
 	);
