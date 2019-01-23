@@ -61,7 +61,7 @@ class Author {
 	public function setAuthorId($newAuthorId) {
 		try {
 			$uuid = self::validateUuid($newAuthorId);
-		}catch(\InvalidArgumentException | \RangeException | \Exception)
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception)
 	}
 
 }
