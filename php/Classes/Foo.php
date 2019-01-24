@@ -90,6 +90,7 @@ class Author {
 	 **/
 
 	public function setAuthorAvatarUrl(string $newAuthorAvatarUrl): void {
+		//
 		$newAuthorAvatarUrl = trim($newAuthorAvatarUrl);
 		$newAuthorAvatarUrl = filter_var($newAuthorAvatarUrl, FILTER_VALIDATE_URL);
 		if(empty($newAuthorAvatarUrl === true)) {
@@ -176,7 +177,7 @@ public function setAuthorEmail($newAuthorEmail): void {
 	 * @return string value of the author hash
 	 **/
 
-public function setAuthorHash(): string {
+public function getAuthorHash(): string {
 	return $this->authorHash;
 }
 
@@ -188,7 +189,7 @@ public function setAuthorHash(): string {
  * @throws \RangeException if the hash is longer than 97 characters
  **/
 
-public  function getAuthorHash($newAuthorHash) {
+public  function setAuthorHash($newAuthorHash) {
 	//Ensure that the hash is formatted correctly
 	$newAuthorHash = trim($newAuthorHash);
 	if(empty($newAuthorHash) === true) {
@@ -206,8 +207,40 @@ public  function getAuthorHash($newAuthorHash) {
 	$this->authorHash = $newAuthorHash;
 }
 
+/**
+ * Accessor method for the authorUsername
+ *
+ * @return string value or the author username
+ **/
 
+public function getAuthorUsername(): string {
+	return $this->authorUsername;
+}
+
+/**
+ * Mutator method for the author username
+ *
+ * @param string $newAuthorUsername new value for the author username
+ * @throws \InvalidArgumentException if $newAuthorUsername is not a string or is insecure
+ * @throws \RangeException if $newAuthorUsername is longer than 32 characters
+ **/
+
+public function setAuthorUsername($newAuthorUsername): void {
+	//Ensure the username is formatted correctly
+	$newAuthorUsername = trim($newAuthorUsername);
+	$newAuthorUsername = filter_var($newAuthorUsername, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	if(empty($newAuthorUsername) === true) {
+		throw (new \InvalidArgumentException("The user name is invalid or insecure."));
+	}
+	//Verify the username is no longer than 32 characters.
+	if(strlen($newAuthorUsername) > 32) {
+		throw (new \RangeException("The username cannot be longer"));
+		}
+	//Store the username
+	$this->authorUsername = $newAuthorUsername;
+	}
 
 }
+
 
 
