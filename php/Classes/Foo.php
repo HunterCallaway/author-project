@@ -41,6 +41,7 @@ class Author {
 	 **/
 	private $authorUsername;
 
+
 	/**
 	 * Accessor method for the author ID
 	 *
@@ -98,6 +99,7 @@ class Author {
 		if(strlen($newAuthorAvatarUrl) > 255) {
 			throw(new \RangeException("This URL is too long. It must be no longer than 255 characters."));
 		}
+		//Store the author avatar URL
 		$this->authorAvatarUrl = $newAuthorAvatarUrl;
 	}
 
@@ -132,8 +134,41 @@ class Author {
 		if(strlen($newAuthorActivationToken) !== 32) {
 			throw (new \RangeException("The user activation token must be 32 characters long."));
 		}
+		//Store the author activation token
+		$this->authorActivationToken = $newAuthorActivationToken;
 	}
 
+/**
+ * Accessor method for the author e-mail
+ *
+ * @return string value of the author e-mail
+ */
+
+public function getAuthorEmail() {
+	return ($this->authorEmail);
+}
+
+/**
+ * Mutator method for the author e-mail
+ *
+ * @param string $newAuthorEmail new value author e-mail
+ * @throws \InvalidArgumentException if the author e-mail address is not valid or is insecure
+ * @throws \RangeException if the author e-mail address is longer than 128 characters
+ **/
+
+public function setAuthorEmail($newAuthorEmail) {
+	$newAuthorEmail = trim($newAuthorEmail);
+	$newAuthorEmail = filter_var($newAuthorEmail, FILTER_VALIDATE_EMAIL);
+	if(empty($newAuthorEmail) === true) {
+		throw(new \InvalidArgumentException("The author e-mail address is not valid or is insecure."));
+	}
+	//Verify that the e-mail address is no longer than 128 characters
+	if(strlen($newAuthorEmail) > 128) {
+		throw (new \RangeException("The e-mail address must be no longer than 128 characters."));
+	}
+	//Store the author e-mail
+	$this->authorEmail = $newAuthorEmail;
+}
 
 }
 
