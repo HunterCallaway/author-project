@@ -119,7 +119,22 @@ class Author {
 	 * @throws \RangeException if the token is not exactly 32 characters
 	 **/
 
-	public function
+	public function setAuthorActivationToken(string $newAuthorActivationToken): void {
+		if($newAuthorActivationToken === null) {
+			$this->authorActivationToken = null;
+			return;
+		}
+		$newAuthorActivationToken = strtolower(trim($newAuthorActivationToken));
+		if(ctype_xdigit($newAuthorActivationToken) === false) {
+			throw(new \RangeException("User activation is not valid."));
+		}
+		//Verify the activation token is only 32 characters long
+		if(strlen($newAuthorActivationToken) !== 32) {
+			throw (new \RangeException("The user activation token must be 32 characters long."));
+		}
+	}
+
+
 }
 
 
