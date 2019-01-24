@@ -157,7 +157,7 @@ public function getAuthorEmail(): string {
  * @throws \RangeException if the author e-mail address is longer than 128 characters
  **/
 
-public function setAuthorEmail($newAuthorEmail): void {
+public function setAuthorEmail(string $newAuthorEmail): void {
 	$newAuthorEmail = trim($newAuthorEmail);
 	$newAuthorEmail = filter_var($newAuthorEmail, FILTER_VALIDATE_EMAIL);
 	if(empty($newAuthorEmail) === true) {
@@ -189,7 +189,7 @@ public function getAuthorHash(): string {
  * @throws \RangeException if the hash is longer than 97 characters
  **/
 
-public  function setAuthorHash($newAuthorHash) {
+public function setAuthorHash(string $newAuthorHash): void {
 	//Ensure that the hash is formatted correctly
 	$newAuthorHash = trim($newAuthorHash);
 	if(empty($newAuthorHash) === true) {
@@ -225,7 +225,7 @@ public function getAuthorUsername(): string {
  * @throws \RangeException if $newAuthorUsername is longer than 32 characters
  **/
 
-public function setAuthorUsername($newAuthorUsername): void {
+public function setAuthorUsername(string $newAuthorUsername): void {
 	//Ensure the username is formatted correctly
 	$newAuthorUsername = trim($newAuthorUsername);
 	$newAuthorUsername = filter_var($newAuthorUsername, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
