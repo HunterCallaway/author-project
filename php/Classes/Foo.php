@@ -54,6 +54,7 @@ class Author {
 	 * Mutator method for author ID
 	 *
 	 * @param Uuid || string $newAuthorId value of new Author Id
+	 * @throws \InvalidArgumentException if the id is not a string or is insecure
 	 * @throws \RangeException if the Uuid is not positive
 	 * @throws \TypeError if the Uuid is not a Uuid or string
 	 **/
@@ -61,7 +62,7 @@ class Author {
 	public function setAuthorId($newAuthorId) {
 		try {
 			$uuid = self::validateUuid($newAuthorId);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		} catch(\InvalidArgumentException | \RangeException | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
@@ -70,11 +71,27 @@ class Author {
 	}
 
 	/**
-	 * Accessor method for the Author id
+	 * Accessor method for the author avatar url
 	 *
-	 * @return
+	 * @return string value of author avatar url
 	 **/
 
+	public function getAuthorAvatarUrl(): string {
+		return ($this->authorAvatarUrl);
+	}
+
+	/**
+	 * Mutator function for the author avatar url
+	 *
+	 * @param string $newAuthorAvatarUrl new value author avatar url
+	 * @throws \InvalidArgumentException if the author url is not a string or is insecure
+	 * @throws \TypeError if the author url is not a string
+	 **/
+
+	public function setAuthorAvatarUrl($newAuthorAvatarUrl): void {
+		$newAuthorAvatarUrl = trim($newAuthorAvatarUrl);
+		$
+	}
 }
 
 
