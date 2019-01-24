@@ -53,7 +53,7 @@ class Author {
 	/**
 	 * Mutator method for author ID
 	 *
-	 * @param Uuid || string $newAuthorId value of new Author Id
+	 * @param Uuid || string $newAuthorId value of new author Id
 	 * @throws \InvalidArgumentException if the id is not a string or is insecure
 	 * @throws \RangeException if the Uuid is not positive
 	 * @throws \TypeError if the Uuid is not a Uuid or string
@@ -85,13 +85,41 @@ class Author {
 	 *
 	 * @param string $newAuthorAvatarUrl new value author avatar url
 	 * @throws \InvalidArgumentException if the author url is not a string or is insecure
-	 * @throws \TypeError if the author url is not a string
+	 * @throws \RangeException if the url is longer than 255 characters
 	 **/
 
-	public function setAuthorAvatarUrl($newAuthorAvatarUrl): void {
+	public function setAuthorAvatarUrl(string $newAuthorAvatarUrl): void {
 		$newAuthorAvatarUrl = trim($newAuthorAvatarUrl);
-		$
+		$newAuthorAvatarUrl = filter_var($newAuthorAvatarUrl, FILTER_VALIDATE_URL);
+		if(empty($newAuthorAvatarUrl === true)) {
+			throw(new \InvalidArgumentException("This URL is invalid or insecure"));
+		}
+		//Verify the URL is no longer than 255 characters
+		if(strlen($newAuthorAvatarUrl) > 255) {
+			throw(new \RangeException("This URL is too long. It must be no longer than 255 characters."));
+		}
+		$this->authorAvatarUrl = $newAuthorAvatarUrl;
 	}
+
+	/**
+	 * Accessor method for the author activation token
+	 *
+	 * @return string value of the author activation token
+	 **/
+
+	public function getAuthorActivationToken(): string {
+		return ($this->authorActivationToken);
+	}
+
+	/**
+	 * Mutator function for the author activation token
+	 *
+	 * @param string $newAuthorActivationToken new value author activation token
+	 * @throws \InvalidArgumentException if the author activation token isn't a string or is insecure
+	 * @throws \RangeException if the token is not exactly 32 characters
+	 **/
+
+	public function
 }
 
 
