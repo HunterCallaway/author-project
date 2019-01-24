@@ -144,7 +144,7 @@ class Author {
  * @return string value of the author e-mail
  */
 
-public function getAuthorEmail() {
+public function getAuthorEmail(): string {
 	return ($this->authorEmail);
 }
 
@@ -156,7 +156,7 @@ public function getAuthorEmail() {
  * @throws \RangeException if the author e-mail address is longer than 128 characters
  **/
 
-public function setAuthorEmail($newAuthorEmail) {
+public function setAuthorEmail($newAuthorEmail): void {
 	$newAuthorEmail = trim($newAuthorEmail);
 	$newAuthorEmail = filter_var($newAuthorEmail, FILTER_VALIDATE_EMAIL);
 	if(empty($newAuthorEmail) === true) {
@@ -169,6 +169,44 @@ public function setAuthorEmail($newAuthorEmail) {
 	//Store the author e-mail
 	$this->authorEmail = $newAuthorEmail;
 }
+
+	/**
+	 * Accessor method for the authorHash
+	 *
+	 * @return string value of the author hash
+	 **/
+
+public function setAuthorHash(): string {
+	return $this->authorHash;
+}
+
+/**
+ * Mutator method for the author hash
+ *
+ * @param string $newAuthorHash new value for the author hash
+ * @throws \InvalidArgumentException if the hash is not secure
+ * @throws \RangeException if the hash is longer than 97 characters
+ **/
+
+public  function getAuthorHash($newAuthorHash) {
+	//Ensure that the hash is formatted correctly
+	$newAuthorHash = trim($newAuthorHash);
+	if(empty($newAuthorHash) === true) {
+		throw (new \InvalidArgumentException("The hash is empty or insecure."));
+	}
+	//Ensure the hash is an Argon hash
+	$authorHashInfo = password_get_info($newAuthorHash);
+	if($authorHashInfo["algoName"] !== "argon2i"){
+		throw (new \InvalidArgumentException("This is not a valid hash."));
+	}
+	if(strlen($newAuthorHash) > 97) {
+		throw (new \RangeException("The hash must be no longer than 97 characters."));
+	}
+	//Store the hash
+	$this->authorHash = $newAuthorHash;
+}
+
+
 
 }
 
