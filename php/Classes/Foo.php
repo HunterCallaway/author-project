@@ -42,11 +42,11 @@ class Author {
 	private $authorUsername;
 
 	/**
-	 * Accessor method for author ID
+	 * Accessor method for the author ID
 	 *
 	 * @return Uuid for author ID(or null if it is a new Author)
 	 **/
-	public function getAuthorId(): Uuid {
+	public function getAuthorId(): string {
 		return ($this->authorID);
 	}
 
@@ -61,8 +61,19 @@ class Author {
 	public function setAuthorId($newAuthorId) {
 		try {
 			$uuid = self::validateUuid($newAuthorId);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception)
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		//Convert and store the author id
+		$this->authorID = $uuid;
 	}
+
+	/**
+	 * Accessor method for the Author id
+	 *
+	 * @return
+	 **/
 
 }
 
