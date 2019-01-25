@@ -63,5 +63,22 @@ trait ValidateDate {
 		if(is_object($newDateTime) === true && get_class($newDateTime) === "DateTime") {
 			return($newDateTime);
 		}
+		try {
+			list($date, $time) = explode(" ", $newDateTime);
+			$date = self::validateDate($date);
+			$time = self::validateDate($time);
+			list($hour, $minute, $second) = explode(":", $time);
+			list($second, $microseconds) = explode(".", second);
+			$date->setTime($hour, $minute, $second, $microseconds);
+			return($date);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
 	}
+	/**
+	 * Custom filter for mySQL style times
+	 *
+	 * Validates a time string. This is designed to be
+	 **/
 }
