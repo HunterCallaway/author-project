@@ -44,4 +44,24 @@ trait ValidateDate {
 		$newDate = \DateTime::createFromFormat("Y-m-d H:i:s", $newDate. " 00:00:00");
 		return($newDate);
 	}
+	/**
+	 * Custom filter for mySQL style dates
+	 *
+	 * Converts a string to a DateTime object. This is designed to be used within a mutator method.
+	 *
+	 * @param mixed $newDateTime date to validate
+	 * @return \DateTime DateTime object containing the validated name
+	 * @see http://php.net/manual/en/class.datetime.php PHP's DateTime class
+	 * @throws \InvalidArgumentException if the date is in an invalid format
+	 * @throws \RangeException if the date is not a Gregorian date
+	 * @throws \TypeError when the type hints fail
+	 * @throws \Exception if some other error occurs
+	 **/
+
+	private static function validateDateTime($newDateTime) : \DateTime {
+		//Base case: if the date is a DateTime object, there is no work to be done.
+		if(is_object($newDateTime) === true && get_class($newDateTime) === "DateTime") {
+			return($newDateTime);
+		}
+	}
 }
