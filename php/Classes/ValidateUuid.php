@@ -31,8 +31,24 @@ trait ValidateUuid {
 			}
 			//Thirty-six characters is a human-readable uuid
 			if(strlen($newUuid) === 36) {
-				if(Uuid::isValid)
+				if(Uuid::isValid($newUuid) === false) {
+					throw(new \InvalidArgumentException("Invalid UUID"));
+				}
+				$uuid = Uuid::fromString($newUuid);
+			} else {
+				throw(new \InvalidArgumentException("Invalid UUID"));
 			}
+		} else if(gettype($newUuid) === "object" && get_class($newUuid) === "Ramsey\\Uuid\\Uuid") {
+			//If the misquote ID is already a valid UUID, continue.
+				$uuid = $newUuid;
+		} else {
+				//Throw out any other trash.
+				throw(new \InvalidArgumentException("Invalid UUID"));
 		}
+		//Verify the UUID is UUID v4.
+		if($uuid->getVersion() !==4) {
+			throw(new \RangeException("The UUID is not the correct version."));
+		}
+		return($uuid);
 	}
 }
