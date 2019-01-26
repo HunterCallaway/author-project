@@ -16,7 +16,7 @@ spl_autoload_register(function($class) {
 	 * baseDir: The base directory for all classes (default = current directory)
 	 *
 	 **/
-	$prefix = "Jcallaway3\\FirstObjectOrientedProject";
+	$prefix = "Jcallaway3\\AuthorProject";
 	$baseDir = ___DIR__;
 
 	//Does the class use the namespace prefix?

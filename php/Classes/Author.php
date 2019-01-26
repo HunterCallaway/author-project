@@ -1,5 +1,5 @@
 <?php
-namespace Jcallaway3\FirstObjectOrientedProject;
+namespace Jcallaway3\AuthorProject;
 
 require_once("autoload.php");
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
