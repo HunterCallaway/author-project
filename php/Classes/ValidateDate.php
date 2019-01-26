@@ -1,5 +1,7 @@
 <?php
 
+namespace Jcallaway3\FirstObjectOrientedProject;
+
 /**
  * Trait to Validate a mySQL Date
  *

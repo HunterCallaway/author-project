@@ -1,4 +1,10 @@
 <?php
+namespace Jcallaway3\FirstObjectOrientedProject;
+
+require_once("autoload.php");
+require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
+
+use Ramsey\Uuid\Uuid;
 
 /**
 * Cross section of a profile
