@@ -247,13 +247,36 @@ public function setAuthorUsername(string $newAuthorUsername): void {
 	$this->authorUsername = $newAuthorUsername;
 	}
 
-	function __construct($idAuthor, $avatarUrlAuthor, $activationTokenAuthor, $emailAuthor, $hashAuthor, $usernameAuthor) {
-		$this->authorID = $idAuthor;
-		$this->authorAvatarUrl = $avatarUrlAuthor;
-		$this->authorActivationToken = $activationTokenAuthor;
-		$this->authorEmail = $emailAuthor;
-		$this->authorHash = $hashAuthor;
-		$this->authorUsername = $usernameAuthor;
+	/**
+	 * constructor for this Author
+	 *
+	 * @param string|Uuid $newAuthorId id of this Author or null if a new Author
+	 * @param string $newAuthorUrl string containing the Author URL
+	 * @param $newAuthorActivationToken string for the Author activation token
+	 * @param $newAuthorEmail string containing this Author's e-mail
+	 * @param $newAuthorHash string containing the hash of this Author
+	 * @param $newAuthorUsername string containing this Author's username
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
+	 **/
+
+	public function __construct($newAuthorId, $newAuthorUrl, $newAuthorActivationToken, $newAuthorEmail, $newAuthorHash, $newAuthorUsername) {
+			try{
+			$this->setAuthorId($newAuthorId);
+			$this->setAuthorAvatarUrl($newAuthorUrl);
+			$this->setAuthorActivationToken($newAuthorActivationToken);
+			$this->setAuthorEmail($newAuthorEmail);
+			$this->setAuthorHash($newAuthorHash);
+			$this->setAuthorUsername($newAuthorUsername);
+		}
+		//Determine what exception type was thrown.
+		catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+		}
 	}
 
 }

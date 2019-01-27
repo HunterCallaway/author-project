@@ -107,7 +107,7 @@ trait ValidateDate {
 		//Put a placeholder for microseconds if they do not exist
 		$microseconds = $matches[4] ?? "0";
 		$newTime = "$hour:$minute:$second.$microseconds";
-		//If the time passes all of the previous tests, the time is clean
+		//If the time passes all of the previous tests, the time is clean.
 		return($newTime);
 	}
 }
