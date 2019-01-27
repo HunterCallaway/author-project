@@ -17,7 +17,7 @@ spl_autoload_register(function($class) {
 	 *
 	 **/
 	$prefix = "Jcallaway3\\AuthorProject";
-	$baseDir = ___DIR__;
+	$baseDir = __DIR__;
 
 	//Does the class use the namespace prefix?
 	$len = strlen($prefix);
@@ -35,6 +35,6 @@ spl_autoload_register(function($class) {
 
 	//If the file exists, require it.
 	if(file_exists($file)) {
-		require_once ($file);
+		require_once($file);
 	}
 });

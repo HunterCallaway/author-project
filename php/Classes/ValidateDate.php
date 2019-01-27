@@ -70,7 +70,7 @@ trait ValidateDate {
 			$date = self::validateDate($date);
 			$time = self::validateDate($time);
 			list($hour, $minute, $second) = explode(":", $time);
-			list($second, $microseconds) = explode(".", second);
+			list($second, $microseconds) = explode(".", $second);
 			$date->setTime($hour, $minute, $second, $microseconds);
 			return($date);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {

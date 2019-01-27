@@ -16,6 +16,7 @@ use Ramsey\Uuid\Uuid;
 
 class Author {
 	use ValidateUuid;
+	use ValidateDate;
 	/**
 	 * id for the Author entity; this is the Primary Key
 	 * @var string $authorID
@@ -244,6 +245,15 @@ public function setAuthorUsername(string $newAuthorUsername): void {
 		}
 	//Store the username
 	$this->authorUsername = $newAuthorUsername;
+	}
+
+	function __construct($idAuthor, $avatarUrlAuthor, $activationTokenAuthor, $emailAuthor, $hashAuthor, $usernameAuthor) {
+		$this->authorID = $idAuthor;
+		$this->authorAvatarUrl = $avatarUrlAuthor;
+		$this->authorActivationToken = $activationTokenAuthor;
+		$this->authorEmail = $emailAuthor;
+		$this->authorHash = $hashAuthor;
+		$this->authorUsername = $usernameAuthor;
 	}
 
 }
