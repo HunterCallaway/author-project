@@ -1,6 +1,8 @@
 <?php
 
 namespace Jcallaway3\AuthorProject;
+require_once(dirname(__DIR__, 2) . "/Classes/autoload.php");
+use Ramsey\Uuid\Uuid;
 
 /**
  * Trait to Validate a mySQL Date
