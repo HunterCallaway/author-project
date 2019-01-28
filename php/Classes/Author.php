@@ -134,10 +134,10 @@ class Author {
 			$this->authorActivationToken = null;
 			return;
 		}
-		$newAuthorActivationToken = strtolower(trim($newAuthorActivationToken));
-		if(ctype_xdigit($newAuthorActivationToken) === false) {
-			throw(new \RangeException("User activation is not valid."));
-		}
+		//$newAuthorActivationToken = strtolower(trim($newAuthorActivationToken));
+		//if(ctype_xdigit($newAuthorActivationToken) === false) {
+			//throw(new \RangeException("User activation is not valid."));
+		//}
 		//Verify the activation token is only 32 characters long
 		if(strlen($newAuthorActivationToken) !== 32) {
 			throw (new \RangeException("The user activation token must be 32 characters long."));
@@ -203,10 +203,10 @@ class Author {
 			throw (new \InvalidArgumentException("The hash is empty or insecure."));
 		}
 		//Ensure the hash is an Argon hash
-		$authorHashInfo = password_get_info($newAuthorHash);
-		if($authorHashInfo["algoName"] !== "argon2i") {
-			throw (new \InvalidArgumentException("This is not a valid hash."));
-		}
+		//$authorHashInfo = password_get_info($newAuthorHash);
+		//if($authorHashInfo["algoName"] !== "argon2i") {
+			//throw (new \InvalidArgumentException("This is not a valid hash."));
+		//}
 		if(strlen($newAuthorHash) > 97) {
 			throw (new \RangeException("The hash must be no longer than 97 characters."));
 		}
