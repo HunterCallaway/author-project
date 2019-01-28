@@ -285,6 +285,10 @@ class Author {
 	 * @throws \PDOException when MySQL-related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
+
+	/**
+	 * PHASE 2
+	 *
 	public function insert(\PDO $pdo): void {
 
 		//Create query template
@@ -302,6 +306,10 @@ class Author {
 	 * @throws \PDOException when MySQL-related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection
 	 **/
+
+	/**
+	 *PHASE 2
+	 *
 	public function delete(\PDO $pdo): void {
 		$query = "DELETE FROM author WHERE authorId = :authorId";
 		$statement = $pdo->prepare($query);
@@ -318,6 +326,10 @@ class Author {
 	 * @throws \PDOException when MySQl-related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection
 	 **/
+
+	/**
+	 * PHASE 2
+
 	public function update(\PDO $pdo) : void{
 		//Create a query template.
 		$query = "UPDATE author SET authorId  = :authorId, authorAvatarUrl = :authorAvatarUrl, authorActivationToken = :authorActivationToken, authorEmail = :authorEmail, authorHash = :authorHash, authorUsername = :authorUsername WHERE authorId = :authorId";
@@ -336,7 +348,10 @@ class Author {
 	 * @throws \PDOException when MySQL-related errors occur
 	 * @throws \TypeError when a variable is not the correct data type
 	 **/
-	public static function getAuthorByAuthorId(\PDO $pdo, $authorId) : ?Author {
+	/**
+	 * PHASE 2
+	 *
+	 * public static function getAuthorByAuthorId(\PDO $pdo, $authorId) : ?Author {
 		//Sanitize the authorId before searching
 		try{
 			$tweetId = self::validateUuid($authorId);
@@ -366,6 +381,10 @@ class Author {
 		}
 		return($author);
 	}
+
+	/**
+	 * Gets the Author by
+	 **/
 
 }
 

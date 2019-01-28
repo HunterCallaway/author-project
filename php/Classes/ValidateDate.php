@@ -43,9 +43,10 @@ trait ValidateDate {
 			throw(new \RangeException("The date is not a Gregorian date."));
 		}
 		//If the date passes all of the previous tests, the date is clean.
-		$newDate = \DateTime::createFromFormat("Y-m-d H:i:s", $newDate. " 00:00:00");
-		return($newDate);
+		$newDate = \DateTime::createFromFormat("Y-m-d H:i:s", $newDate . " 00:00:00");
+		return ($newDate);
 	}
+
 	/**
 	 * Custom filter for mySQL style dates
 	 *
@@ -60,10 +61,11 @@ trait ValidateDate {
 	 * @throws \Exception if some other error occurs
 	 **/
 
+
 	private static function validateDateTime($newDateTime) : \DateTime {
 		//Base case: if the date is a DateTime object, there is no work to be done.
 		if(is_object($newDateTime) === true && get_class($newDateTime) === "DateTime") {
-			return($newDateTime);
+			return ($newDateTime);
 		}
 		try {
 			list($date, $time) = explode(" ", $newDateTime);
@@ -72,7 +74,7 @@ trait ValidateDate {
 			list($hour, $minute, $second) = explode(":", $time);
 			list($second, $microseconds) = explode(".", $second);
 			$date->setTime($hour, $minute, $second, $microseconds);
-			return($date);
+			return ($date);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
@@ -89,6 +91,7 @@ trait ValidateDate {
 	 * @throws \InvalidArgumentException if the date is in an invalid format
 	 * @throws \RangeException if the date is not a Gregorian date
 	 **/
+
 
 	private static function validateTime(string $newTime) : string {
 		//Treat the date as a mySQL date string: H:i:s[.u]
