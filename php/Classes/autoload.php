@@ -1,4 +1,6 @@
 <?php
+
+namespace Jcallaway3\AuthorProject;
 /**
  * PSR-4 Compliant Autoloader
  *

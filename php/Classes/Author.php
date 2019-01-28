@@ -92,16 +92,16 @@ class Author {
 	 * Mutator function for the author avatar url
 	 *
 	 * @param string $newAuthorAvatarUrl new value author avatar url
-	 * @throws \InvalidArgumentException if the author url is not a string or is insecure
+	 * @throws \InvalidArgumentException if the author url is empty
 	 * @throws \RangeException if the url is longer than 255 characters
 	 **/
 
-	public function setAuthorAvatarUrl(string $newAuthorAvatarUrl): void {
+	public function setAuthorAvatarUrl(string $newAuthorAvatarUrl) {
 		//
-		$newAuthorAvatarUrl = trim($newAuthorAvatarUrl);
-		$newAuthorAvatarUrl = filter_var($newAuthorAvatarUrl, FILTER_VALIDATE_URL);
-		if(empty($newAuthorAvatarUrl === true)) {
-			throw(new \InvalidArgumentException("This URL is invalid or insecure"));
+		//$newAuthorAvatarUrl = trim($newAuthorAvatarUrl);
+		//$newAuthorAvatarUrl = filter_var($newAuthorAvatarUrl, FILTER_VALIDATE_URL);
+		if(empty($newAuthorAvatarUrl) === true) {
+			throw(new \InvalidArgumentException("This URL is empty."));
 		}
 		//Verify the URL is no longer than 255 characters
 		if(strlen($newAuthorAvatarUrl) > 255) {
@@ -251,7 +251,7 @@ class Author {
 	 * constructor for this Author
 	 *
 	 * @param string|Uuid $newAuthorId id of this Author or null if a new Author
-	 * @param string $newAuthorUrl string containing this Author's avatar URL
+	 * @param string $newAuthorAvatarUrl string containing this Author's avatar URL
 	 * @param $newAuthorActivationToken string for the Author activation token
 	 * @param $newAuthorEmail string containing this Author's e-mail
 	 * @param $newAuthorHash string containing the hash of this Author
@@ -288,16 +288,14 @@ class Author {
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 
-	/**
-	 * PHASE 2
-	 *
+
 	public function insert(\PDO $pdo): void {
 
 		//Create query template
 		$query = "INSERT INTO author (authorId, authorAvatarUrl, authorActivationToken, authorEmail, authorHash, authorUsername) VALUES(:authorId, :authorAvatarUrl, :authorActivationToken, :authorEmail, :authorHash, :authorUsername)";
 		$statement = $pdo->prepare($query);
 
-		$parameters = ["authorId" => $this->authorID->getBytes(), "authorAvatarURL" => $this->authorAvatarUrl, "authorActivationToken" => $this->authorActivationToken, "authorEmail" => $this->authorEmail, "authorHash" => $this->authorHash, "authorUsername" => $this->authorUsername];
+		$parameters = ["authorId" => $this->authorID, "authorAvatarURL" => $this->authorAvatarUrl, "authorActivationToken" => $this->authorActivationToken, "authorEmail" => $this->authorEmail, "authorHash" => $this->authorHash, "authorUsername" => $this->authorUsername];
 		$statement->execute($parameters);
 	}
 
