@@ -52,7 +52,7 @@ class Author {
 	/**
 	 * Accessor method for the author ID
 	 *
-	 * @return Uuid for author ID(or null if it is a new Author)
+	 * @return string for author ID(or null if it is a new Author)
 	 **/
 	public function getAuthorId(): string {
 		return ($this->authorID);
@@ -295,7 +295,7 @@ class Author {
 		$query = "INSERT INTO author (authorId, authorAvatarUrl, authorActivationToken, authorEmail, authorHash, authorUsername) VALUES(:authorId, :authorAvatarUrl, :authorActivationToken, :authorEmail, :authorHash, :authorUsername)";
 		$statement = $pdo->prepare($query);
 
-		$parameters = ["authorId" => $this->authorID, "authorAvatarURL" => $this->authorAvatarUrl, "authorActivationToken" => $this->authorActivationToken, "authorEmail" => $this->authorEmail, "authorHash" => $this->authorHash, "authorUsername" => $this->authorUsername];
+		$parameters = ["authorId" => $this->authorID->getBytes(), "authorAvatarURL" => $this->authorAvatarUrl, "authorActivationToken" => $this->authorActivationToken, "authorEmail" => $this->authorEmail, "authorHash" => $this->authorHash, "authorUsername" => $this->authorUsername];
 		$statement->execute($parameters);
 	}
 
@@ -307,9 +307,7 @@ class Author {
 	 * @throws \TypeError if $pdo is not a PDO connection
 	 **/
 
-	/**
-	 *PHASE 2
-	 *
+
 	public function delete(\PDO $pdo): void {
 		$query = "DELETE FROM author WHERE authorId = :authorId";
 		$statement = $pdo->prepare($query);
@@ -327,8 +325,7 @@ class Author {
 	 * @throws \TypeError if $pdo is not a PDO connection
 	 **/
 
-	/**
-	 * PHASE 2
+
 
 	public function update(\PDO $pdo) : void{
 		//Create a query template.
@@ -348,10 +345,8 @@ class Author {
 	 * @throws \PDOException when MySQL-related errors occur
 	 * @throws \TypeError when a variable is not the correct data type
 	 **/
-	/**
-	 * PHASE 2
-	 *
-	 * public static function getAuthorByAuthorId(\PDO $pdo, $authorId) : ?Author {
+
+	 public static function getAuthorByAuthorId(\PDO $pdo, $authorId) : ?Author {
 		//Sanitize the authorId before searching
 		try{
 			$tweetId = self::validateUuid($authorId);
@@ -383,8 +378,30 @@ class Author {
 	}
 
 	/**
-	 * Gets the Author by
+	 * Gets all Authors
+	 *
+	 * @param \PDO
 	 **/
+
+	public static function getAllAuthors(\PDO $pdo) {
+		$query = "SELECT authorId, authorAvatarUrl, authorActivationToken, authorEmail, authorHash, authorUsername FROM author";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		//Build an array of authors.
+		$authors = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$author = new Author($row["authorId"], $row["authorAvatarId"], $row["authorActivationToken"], $row["authorEmail"], $row["authorHash"], $row["authorUsername"]);
+				$authors[$authors->key()] = $author;
+				$authors->next();
+			} catch(\Exception $exception) {
+				//If the code can't be converted, rethrow it.
+				throw (new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+	}
 
 }
 
